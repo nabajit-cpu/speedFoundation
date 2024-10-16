@@ -1,12 +1,16 @@
 package com.example.user.user.controller;
 
+import com.example.user.user.exceptions.InvalidCredentialsException;
+import com.example.user.user.model.LoginRequest;
 import com.example.user.user.model.UserModel;
 import com.example.user.user.service.UserService;
 
+import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,20 +27,25 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> registerUser(@RequestBody UserModel user) throws Exception {
-        UserModel usermodel =  userService.register(user);
+        UserModel usermodel = userService.register(user);
         return ResponseEntity.ok(usermodel);
     }
 
-    @GetMapping("/users")
-    public List<UserModel> getUsers(){
-        
-       
-        List<UserModel> users = new ArrayList<>();
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+
         try {
-            users = userService.getUsers();
-        } catch (Exception e) {
-            e.printStackTrace();
+            UserModel user = userService.login(loginRequest);
+            return ResponseEntity.ok(user);
+        } catch (InvalidCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-        return users;
+
+    }
+
+    @GetMapping("/users")
+    public List<UserModel> getUsers() throws Exception {
+        return userService.getUsers();
+
     }
 }

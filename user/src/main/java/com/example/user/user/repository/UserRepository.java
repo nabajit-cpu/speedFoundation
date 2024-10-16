@@ -6,4 +6,6 @@ import com.example.user.user.model.UserModel;
 
 public interface UserRepository extends MongoRepository<UserModel, Long> {
 
+    UserModel findByEmail(String email);
+
 }
