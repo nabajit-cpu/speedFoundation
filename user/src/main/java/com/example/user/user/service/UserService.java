@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.user.user.exceptions.InvalidCredentialsException;
@@ -19,10 +19,20 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public UserModel register(UserModel user) throws Exception {
-     
+
+
+
+        System.out.println("service - inside register ");
+        UserModel userModel = userRepository.findByEmail(user.getEmail());
+        if(userModel!=null){
+            throw new Exception("Email already registered");
+       
+        }
+        System.out.println("service - before hash ");
+       
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         return userRepository.save(user);
@@ -47,9 +57,13 @@ public class UserService {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
+        if(email == null  || password==null){
+            throw new InvalidCredentialsException("Empty credential");
+        }
+
         UserModel user = userRepository.findByEmail(email);
 
-        if(email == null || !passwordEncoder.matches(password, user.getPassword())){
+        if(user == null || !passwordEncoder.matches(password, user.getPassword())){
             throw new InvalidCredentialsException("Invalid email or password");
         }
 

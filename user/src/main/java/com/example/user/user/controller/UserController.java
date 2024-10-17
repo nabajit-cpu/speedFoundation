@@ -1,12 +1,5 @@
 package com.example.user.user.controller;
 
-import com.example.user.user.exceptions.InvalidCredentialsException;
-import com.example.user.user.model.LoginRequest;
-import com.example.user.user.model.UserModel;
-import com.example.user.user.service.UserService;
-
-import java.io.InvalidClassException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.user.user.exceptions.InvalidCredentialsException;
+import com.example.user.user.model.LoginRequest;
+import com.example.user.user.model.UserModel;
+import com.example.user.user.service.UserService;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -27,6 +25,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> registerUser(@RequestBody UserModel user) throws Exception {
+        System.out.println("Hello register");
         UserModel usermodel = userService.register(user);
         return ResponseEntity.ok(usermodel);
     }
@@ -38,7 +37,7 @@ public class UserController {
             UserModel user = userService.login(loginRequest);
             return ResponseEntity.ok(user);
         } catch (InvalidCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
 
     }
