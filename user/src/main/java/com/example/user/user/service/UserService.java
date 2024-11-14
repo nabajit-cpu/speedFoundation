@@ -49,6 +49,11 @@ public class UserService {
 
     }
 
+    public UserModel uploadBio(UserModel user)throws Exception{
+        UserModel userModel = userRepository.save(user);
+        return userModel;
+    }
+
     public List<UserModel> getUsers() {
 
         List<UserModel> list = new ArrayList<>();
@@ -63,7 +68,5 @@ public class UserService {
 
     }
 
-    public UserModel submitUserDetails(UserModel user) throws Exception{
-        return userRepository.save(user);
-    }
+   
 }

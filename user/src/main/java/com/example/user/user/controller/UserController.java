@@ -32,7 +32,6 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> registerUser(@RequestBody UserModel user) throws Exception {
-        System.out.println("Hello register");
         UserModel usermodel = userService.register(user);
         return ResponseEntity.ok(usermodel);
     }
@@ -50,15 +49,17 @@ public class UserController {
     }
 
     @PostMapping("/uploadImage")
-    public ResponseEntity<Map> uploadImage(@RequestBody MultipartFile file) throws  IOException{
+    public ResponseEntity<Map> uploadImage(@RequestBody MultipartFile file) throws IOException {
         Map result = cloudinaryService.upload(file);
         return ResponseEntity.ok(result);
     }
-    @PostMapping("/submitUserDetails")
-    public UserModel submitUserDetails(@RequestBody UserModel user) throws Exception{
-        UserModel userModel = userService.submitUserDetails(user);
-        // return ResponseEntity.ok(userModel);
-        return userModel;
+
+    @PostMapping("/uploadBio")
+    public ResponseEntity<UserModel> uploadBio(@RequestBody UserModel user) throws Exception {
+
+        UserModel userModel = userService.uploadBio(user);
+        return ResponseEntity.ok(userModel);
+
     }
 
     @GetMapping("/users")
