@@ -23,19 +23,30 @@ public class UserService {
 
     public UserModel register(UserModel user) throws Exception {
 
-
-
-        System.out.println("service - inside register ");
         UserModel userModel = userRepository.findByEmail(user.getEmail());
-        if(userModel!=null){
+        if (userModel != null) {
             throw new Exception("Email already registered");
-       
+
         }
-        System.out.println("service - before hash ");
-       
+
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         return userRepository.save(user);
+    }
+
+    public UserModel login(LoginRequest loginRequest) throws InvalidCredentialsException {
+
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+
+        UserModel user = userRepository.findByEmail(email);
+
+        if (email == null || !passwordEncoder.matches(password, user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
+
+        return user;
+
     }
 
     public List<UserModel> getUsers() {
@@ -52,25 +63,7 @@ public class UserService {
 
     }
 
-    public UserModel login(LoginRequest loginRequest) throws InvalidCredentialsException{
-
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-
-        if(email == null  || password==null){
-            throw new InvalidCredentialsException("Empty credential");
-        }
-
-        UserModel user = userRepository.findByEmail(email);
-
-        if(user == null || !passwordEncoder.matches(password, user.getPassword())){
-            throw new InvalidCredentialsException("Invalid email or password");
-        }
-
-        return user;
-
-
-        
+    public UserModel submitUserDetails(UserModel user) throws Exception{
+        return userRepository.save(user);
     }
-
 }

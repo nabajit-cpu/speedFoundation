@@ -1,8 +1,6 @@
 package com.example.user.user.configuration;
 
-import java.beans.Customizer;
 
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,7 +24,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/user/register", "/user/login").permitAll()
+                .requestMatchers("/user/register", "/user/login", "/user/uploadImage", "/user/submitUserDetails", "/user/users").permitAll()
                 .anyRequest().authenticated()
                 );
                 // .formLogin(form -> form
