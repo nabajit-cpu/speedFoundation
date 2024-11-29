@@ -45,7 +45,6 @@ public class UserController {
         } catch (InvalidCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
-
     }
 
     @PostMapping("/uploadImage")
@@ -56,7 +55,6 @@ public class UserController {
 
     @PostMapping("/uploadBio")
     public ResponseEntity<UserModel> uploadBio(@RequestBody UserModel user) throws Exception {
-
         UserModel userModel = userService.uploadBio(user);
         return ResponseEntity.ok(userModel);
 
