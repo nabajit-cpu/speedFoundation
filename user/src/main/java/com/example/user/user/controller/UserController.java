@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.user.security.JwtHelper;
-import com.example.user.security.JwtRequest;
-import com.example.user.security.JwtResponse;
 import com.example.user.user.model.UserModel;
+import com.example.user.user.security.JwtHelper;
+import com.example.user.user.security.JwtRequest;
+import com.example.user.user.security.JwtResponse;
 import com.example.user.user.service.CloudinaryService;
 import com.example.user.user.service.CustomUserDetailsService;
 import com.example.user.user.service.UserService;
@@ -79,11 +80,7 @@ public class UserController {
 
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
-    }
-
+ 
     @PostMapping("/uploadImage")
     public ResponseEntity<Map> uploadImage(@RequestBody MultipartFile file) throws IOException {
         Map result = cloudinaryService.upload(file);
@@ -91,9 +88,10 @@ public class UserController {
     }
 
     @PostMapping("/uploadBio")
-    public ResponseEntity<UserModel> uploadBio(@RequestBody UserModel user) throws Exception {
-        UserModel userModel = userService.uploadBio(user);
-        return ResponseEntity.ok(userModel);
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserModel> uploadBio(@RequestBody UserModel userModel) throws Exception {
+        UserModel user = userService.uploadBio(userModel);
+        return ResponseEntity.ok(user);
 
     }
 

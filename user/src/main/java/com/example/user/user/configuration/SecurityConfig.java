@@ -13,8 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.user.security.JwtAuthenticationEntryPoint;
-import com.example.user.security.JwtAuthenticationFilter;
+import com.example.user.user.security.JwtAuthenticationEntryPoint;
+import com.example.user.user.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .requestMatchers("/user/login", "/user/users", "/user/register").permitAll() // Allow both endpoints
                 .anyRequest().authenticated()
                 .and()
-                // .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

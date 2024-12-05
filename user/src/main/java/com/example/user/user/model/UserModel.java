@@ -4,16 +4,23 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Document(collection = "users")
 public class UserModel implements UserDetails {
 
+    @Id
+    private String id;
     private String name;
+
+    @Indexed(unique = true) 
     private String email;
+
+    
     private String password;
     private String role; // Admin, Member
     private String profilePicture;
@@ -38,6 +45,16 @@ public class UserModel implements UserDetails {
     // Setter for name
     public void setName(String name) {
         this.name = name;
+    }
+
+     // Getter for name
+     public String getId() {
+        return id;
+    }
+
+    // Setter for name
+    public void setId(String id) {
+        this.id = id;
     }
 
     // Getter for email

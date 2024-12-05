@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +17,7 @@ import com.example.user.user.model.UserModel;
 import com.example.user.user.repository.UserRepository;
 
 @Service
-public class UserService{
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -37,24 +38,33 @@ public class UserService{
         return userRepository.save(user);
     }
 
-    public UserModel login(AuthRequest authRequest) throws InvalidCredentialsException {
+    // public UserModel login(AuthRequest authRequest) throws InvalidCredentialsException {
 
-        String email = authRequest.getUsername();
-        String password = authRequest.getPassword();
+    //     String email = authRequest.getUsername();
+    //     String password = authRequest.getPassword();
 
-        UserModel user = userRepository.findByEmail(email);
+    //     UserModel user = userRepository.findByEmail(email);
 
-        if (email == null || !passwordEncoder.matches(password, user.getPassword())) {
-            throw new InvalidCredentialsException("Invalid email or password");
-        }
+    //     if (email == null || !passwordEncoder.matches(password, user.getPassword())) {
+    //         throw new InvalidCredentialsException("Invalid email or password");
+    //     }
 
-        return user;
+    //     return user;
 
-    }
+    // }
 
-    public UserModel uploadBio(UserModel user)throws Exception{
-        UserModel userModel = userRepository.save(user);
-        return userModel;
+    public UserModel uploadBio(UserModel userModel) throws Exception {
+        // Retrieve the currently logged-in user's username (or another unique identifier)
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("email : " + email);
+        // Find the current user in the database
+        UserModel currentUser = userRepository.findByEmail(email);
+        // Update the bio for the current user
+        currentUser.setBio(userModel.getBio());
+
+        // Save the updated user back to the database
+        return userRepository.save(currentUser);
+
     }
 
     public List<UserModel> getUsers() {
@@ -71,7 +81,4 @@ public class UserService{
 
     }
 
-   
-
-   
 }
