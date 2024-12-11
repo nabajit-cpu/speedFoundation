@@ -2,17 +2,12 @@ package com.example.user.user.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.example.user.user.exceptions.InvalidCredentialsException;
-import com.example.user.user.model.AuthRequest;
 import com.example.user.user.model.UserModel;
 import com.example.user.user.repository.UserRepository;
 
@@ -38,20 +33,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    // public UserModel login(AuthRequest authRequest) throws InvalidCredentialsException {
-
-    //     String email = authRequest.getUsername();
-    //     String password = authRequest.getPassword();
-
-    //     UserModel user = userRepository.findByEmail(email);
-
-    //     if (email == null || !passwordEncoder.matches(password, user.getPassword())) {
-    //         throw new InvalidCredentialsException("Invalid email or password");
-    //     }
-
-    //     return user;
-
-    // }
 
     public UserModel uploadBio(UserModel userModel) throws Exception {
         // Retrieve the currently logged-in user's username (or another unique identifier)
@@ -79,6 +60,11 @@ public class UserService {
         System.out.println("UserModel" + list);
         return list;
 
+    }
+
+
+    public Optional<UserModel> getUser(String id) {
+        return userRepository.findById(id);
     }
 
 }
