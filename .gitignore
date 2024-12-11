@@ -1,0 +1,3 @@
+user/src/main/resources/application.properties
+notification/src/main/resources/application.properties
+events/src/main/resources/application.properties
