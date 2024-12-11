@@ -1,0 +1,6 @@
+
+Go to each service directory and run the below commands:
+
+/speedFoundation/events/: mvn clean spring-boot:run
+/speedFoundation/notification/: mvn clean spring-boot:run
+/speedFoundation/user/: mvn clean spring-boot:run
