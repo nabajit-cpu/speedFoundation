@@ -1,5 +1,13 @@
 package com.example.notification.kafka.producer;
 
+<<<<<<< HEAD
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+=======
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -13,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @Data
+>>>>>>> main
 @RequiredArgsConstructor
 public class NotificationKafkaProducer{
     private static final String TOPIC = "events-acknowledgement";

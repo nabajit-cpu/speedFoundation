@@ -13,7 +13,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Service
+<<<<<<< HEAD
+=======
 @Data
+>>>>>>> main
 @RequiredArgsConstructor
 public class NotificationKafkaConsumer {
 
