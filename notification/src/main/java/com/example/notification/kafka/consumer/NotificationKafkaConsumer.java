@@ -4,19 +4,17 @@ import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 
 import com.example.notification.kafka.producer.NotificationKafkaProducer;
 import com.example.notification.service.NotificationService;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Service
-<<<<<<< HEAD
-=======
 @Data
->>>>>>> main
 @RequiredArgsConstructor
 public class NotificationKafkaConsumer {
 
