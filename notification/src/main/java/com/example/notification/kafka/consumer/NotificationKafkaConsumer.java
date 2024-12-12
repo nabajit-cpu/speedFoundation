@@ -1,4 +1,4 @@
-package com.example.notification.kafka;
+package com.example.notification.kafka.consumer;
 
 import java.util.Map;
 
@@ -13,7 +13,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Data
 @RequiredArgsConstructor
 public class NotificationKafkaConsumer {
 
