@@ -50,6 +50,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> registerUser(@RequestBody UserModel user) throws Exception {
+        System.out.println("Inside registerUser");
         UserModel usermodel = userService.register(user);
         return ResponseEntity.ok(usermodel);
     }

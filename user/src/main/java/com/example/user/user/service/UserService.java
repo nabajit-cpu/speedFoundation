@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.example.user.user.model.UserModel;
 import com.example.user.user.repository.UserRepository;
 
@@ -21,6 +22,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public UserModel register(UserModel user) throws Exception {
+
+        System.out.println("Inside register service");
 
         UserModel userModel = userRepository.findByEmail(user.getEmail());
         if (userModel != null) {
