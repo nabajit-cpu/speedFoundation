@@ -17,7 +17,8 @@ import javax.crypto.SecretKey;
 @Component
 public class JwtHelper {
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    // 24 hours
+    public static final long JWT_TOKEN_VALIDITY = 86400000;
 
     // Generate a secure key
     private final SecretKey secretKey = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS512);

@@ -12,8 +12,11 @@ public class CloudinaryConfiguration {
 
     @Bean
     public Cloudinary cloudinary() {
+        // Load .env file from the parent directory
+        Dotenv dotenv = Dotenv.configure()
+                             .directory("../")  // Point to the parent directory
+                             .load();
 
-        return new Cloudinary(Dotenv.load().get("CLOUDINARY_URL"));
-
+        return new Cloudinary(dotenv.get("CLOUDINARY_URL"));
     }
 }
