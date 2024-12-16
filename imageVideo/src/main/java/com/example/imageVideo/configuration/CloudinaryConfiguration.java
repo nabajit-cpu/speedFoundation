@@ -1,4 +1,4 @@
-package com.example.user.user.configuration;
+package com.example.imageVideo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

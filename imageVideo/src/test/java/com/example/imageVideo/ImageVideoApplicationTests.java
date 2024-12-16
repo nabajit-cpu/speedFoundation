@@ -1,10 +1,10 @@
-package com.example.events;
+package com.example.imageVideo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EventsApplicationTests {
+class ImageVideoApplicationTests {
 
 	@Test
 	void contextLoads() {
