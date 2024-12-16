@@ -17,16 +17,20 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtHelper {
 
+
     // 24 hours
     public static final long JWT_TOKEN_VALIDITY = 86400000;
 
+
     // Generate a secure key
-    private final SecretKey secretKey = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS512);
+    private final SecretKey secretKey = Keys.hmacShaKeyFor("Xk7dfh92@#Fgsh87*Lkjw3201!NcvbM92#Asdgh239!Mqw32%Wkd89*Fdlwq".getBytes());
+
 
     // Retrieve username from JWT token
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
+  
 
     // Retrieve expiration date from JWT token
     public Date getExpirationDateFromToken(String token) {
@@ -39,7 +43,7 @@ public class JwtHelper {
     }
 
     // For retrieving any information from token, we need the secret key
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
     }
 
@@ -66,10 +70,11 @@ public class JwtHelper {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
                 .signWith(secretKey)
                 .compact();
     }
+
 
     // Validate token
     public Boolean validateToken(String token, UserDetails userDetails) {
@@ -77,8 +82,5 @@ public class JwtHelper {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public void invalidateToken(String jwtToken) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'invalidateToken'");
-    }
+   
 }

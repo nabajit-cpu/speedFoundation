@@ -82,6 +82,7 @@ public class UserController {
 
     }
 
+
  
     @PostMapping("/uploadImage")
     public ResponseEntity<Map> uploadImage(@RequestBody MultipartFile file) throws IOException {
@@ -109,10 +110,10 @@ public class UserController {
 
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody String jwtToken) {
-        jwtHelper.invalidateToken(jwtToken);
+    // @PostMapping("/logout")
+    // public ResponseEntity<String> logout(@RequestBody String jwtToken) {
+    //     jwtHelper.invalidateToken(jwtToken);
 
-        return new ResponseEntity<>("Logged out successfully!", HttpStatus.OK);
-    }
+    //     return new ResponseEntity<>("Logged out successfully!", HttpStatus.OK);
+    // }
 }
