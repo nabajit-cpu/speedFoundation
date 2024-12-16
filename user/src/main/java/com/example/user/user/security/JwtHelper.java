@@ -18,8 +18,9 @@ import io.jsonwebtoken.security.Keys;
 public class JwtHelper {
 
 
-    // 24 hours = 86,400,000ms
-    public static final long JWT_TOKEN_VALIDITY = 30000;
+    // 24 hours
+    public static final long JWT_TOKEN_VALIDITY = 86400000;
+
 
     // Generate a secure key
     private final SecretKey secretKey = Keys.hmacShaKeyFor("Xk7dfh92@#Fgsh87*Lkjw3201!NcvbM92#Asdgh239!Mqw32%Wkd89*Fdlwq".getBytes());
