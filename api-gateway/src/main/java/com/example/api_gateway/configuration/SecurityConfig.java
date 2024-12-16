@@ -20,7 +20,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .addFilterAt(filter, SecurityWebFiltersOrder.AUTHORIZATION)
                 .authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/user-service/user/login","user-service/user/register").permitAll()
+                .pathMatchers("/**").permitAll()
                 .anyExchange().authenticated());
         return http.build();
     }
